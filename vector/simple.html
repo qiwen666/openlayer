@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Simple Map</title>
+  <link rel="stylesheet" href="../v6.4.3/css/ol.css" />
+  <script src="../v6.4.3/build/ol.js"></script>
+  <style>
+    #map {
+      width: 500px;
+      height: 500px;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="map"></div>
+
+  <script>
+    var map = new ol.Map({
+      target: 'map',
+      layers: [
+        new ol.layer.Tile({
+          source: new ol.source.OSM()
+        })
+      ],
+      view: new ol.View({
+        center: [0, 0],
+        zoom: 3
+      })
+    })
+    //点要素
+    var pointFeature = new ol.Feature(
+      new ol.geom.Point([0, 0])
+    );
+    //线要素
+    var lineFeature = new ol.Feature(
+      new ol.geom.LineString(
+        [
+          [-1e7, 1e6],
+          [-1e6, 3e6]
+        ]
+      )
+    );
+    //  先初始化一个矢量绘制图层对象并添加到地图容器中，
+    // 然后加载交互绘制矢量图形控件ol.interaction.Draw（在实例化时设置绘制类型：点、线、规则多边形、任意多边形，以及几何图形对应的特征参数），
+    // 最后通过激活绘图图形控件在地图上绘制相应的几何图形。
+    //多边形要素
+    var polygonFeature = new ol.Feature(
+      new ol.geom.Polygon(
+        [
+          [
+            [-3e6, -1e6],
+            [-3e6, 1e6],
+            [-1e6, 1e6],
+            [-1e6, -1e6],
+            [-3e6, -1e6]
+          ]
+        ]
+      )
+    );
+    //实例化一个矢量图层Vector作为绘制层
+
+    var source = new ol.source.Vector({ //数据源
+      features: [
+        pointFeature,
+        lineFeature,
+        polygonFeature
+      ]
+    });
+    var vectorLayer = new ol.layer.Vector({ //矢量图层
+      source: source,
+      style: new ol.style.Style({
+        fill: new ol.style.Fill({               //填充样式
+          color: 'rgba(255, 255, 255, 0.2'
+        }),
+        stroke: new ol.style.Stroke({           //线样式
+          color: '#ffcc33',
+          width: 2
+        }),
+        image: new ol.style.Circle({            //点样式
+          radius: 7,
+          fill: new ol.style.Fill({
+            color: '#ffcc33'
+          })
+        })
+      })
+    });
+    //将绘制层添加到地图容器中
+    map.addLayer(vectorLayer);
+  </script>
+</body>
+
+</html>

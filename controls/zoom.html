@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Simple Map</title>
+  <link rel="stylesheet" href="../v6.4.3/css/ol.css" />
+  <script src="../v6.4.3/build/ol.js"></script>
+  <style>
+    #map {
+      width: 500px;
+      height: 500px;
+      margin: 0 auto;
+    }
+    #map .ol-zoom .ol-zoom-out {
+      margin-top: 204px;
+    }
+    #map .ol-zoomslider {
+      background-color: transparent;
+      top: 2.3em;
+    }
+    #map .ol-zoom-extent {
+      top: 280px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="map"></div>
+
+  <script>
+    let map = new ol.Map({
+      target: 'map',                          // 关联到对应的div容器
+      layers: [
+        new ol.layer.Tile({                 // 瓦片图层
+          source: new ol.source.OSM()     // OpenStreetMap数据源
+        })
+      ],
+      view: new ol.View({                     // 地图视图
+        projection: 'EPSG:3857',
+        center: [0, 0],
+        zoom: 0
+      }),
+      // ol.control.defaults()方法就用于返回保存默认控件，extend()方法往里增加了滑块缩放控件
+      // 新增代码
+      controls: ol.control.defaults().extend([    // 往地图增加滑块缩放控件
+        new ol.control.ZoomSlider(),
+
+        new ol.control.ZoomToExtent({ //缩放至特定位置控件
+          extent: [
+            12667718, 2562800,
+            12718359, 2597725
+          ]
+        })
+      ])
+    });
+  </script>
+</body>
+
+</html>
