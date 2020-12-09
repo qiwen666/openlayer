@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Map</title>
+  <link rel="stylesheet" href="../v6.4.3/css/ol.css">
+  <script src="../v6.4.3/build/ol.js"></script>
+  <style>
+    #map {
+      width: 800px;
+      height: 500px;
+      margin: 200px auto;
+    }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  <script>
+    /*
+      1、调用ol.Map类生成一个地图容器，通过target参数关联到div容器（id为“map”的div元素）,
+      2、
+    */
+    let map = new ol.Map({
+      target: 'map',
+      layers: [
+        new ol.layer.Tile({
+          source: new ol.source.OSM()
+        })
+      ],
+      view: new ol.View({
+        projection: 'EPSG:3857',
+        center: [0, 0],
+        zoom: 0
+      })
+    })
+  </script>
+</body>
+</html>
